@@ -17,12 +17,23 @@
     this.BlocksParser = function(selector) {
 
         this.SELECTOR = selector;
+        this.BLOCK = null;
+
+        this.init();
+    };
+
+
+
+    BlocksParser.prototype.init = function() {
+
         if (!this.SELECTOR) {return;}
 
         this.BLOCK = document.querySelector(this.SELECTOR);
         if (!this.BLOCK) {return;}
 
-        init.call(this);
+        render.init(this.BLOCK);
+        initEvents.call(this);
+        this.BLOCK.classList.add('blocks-parser');
     };
 
     BlocksParser.prototype.get = function() {
@@ -30,15 +41,6 @@
     };
 
     // Private
-
-    var init = function() {
-
-        render.init(this.BLOCK);
-        initEvents.call(this);
-
-        this.BLOCK.classList.add('blocks-parser');
-    };
-
     var thisParent = function(el) {
         return el.parentNode.classList.contains('blocks-parser') ? el : el.parentNode;
     };

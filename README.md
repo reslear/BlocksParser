@@ -22,20 +22,11 @@ myBlock.get();
 
 # API
 ### Свойства
-* `BLOCK` - Узел селектора
-```
-// пример
-var el = document.querySelector('.cust');
-myBlock.BLOCK = el;
-```
-
+* `SELECTOR` - Узел селектора (напр.: `myBlock.SELECTOR = '.newsel';`)
 ### Методы
 * `get` - Получение готового HTML кода
-    ```
-    // пример
-    myBlock.get();
-    ```
-
+* `init` - Запускает парсинг кода (Внимание! - этот метод используется в момент создания конструктора (`new BlocksParser('.blog')`), повторное его использования возможно только после использования метода `update` )
+* `update` - замена всех contenteditable на обычный html, редактирование будет запрещено.
 
 # Change Log
 ### v 0.1
@@ -44,3 +35,7 @@ myBlock.BLOCK = el;
 * удалить дерево
 
 ### Released
+
+# TODO
+* restore method - вернуть код
+* ...
