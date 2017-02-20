@@ -15,13 +15,13 @@ var myBlock = new BlocksParser('.blog');
 ```
 где ```.blog``` - селектор с контентом
 
-2.  Получение html:
+3.  Получение html:
 ```
 myBlock.get();
 ```
 
 # API
-+ #### Свойства
+### Свойства
     + ```BLOCK``` - Узел селектора
 ```
 // пример
@@ -29,7 +29,7 @@ var el = document.querySelector('.cust');
 myBlock.BLOCK = el;
 ```
 
-+ #### Методы
+### Методы
     + ```get``` - Получение готового HTML кода
     ```
     // пример
@@ -38,8 +38,8 @@ myBlock.BLOCK = el;
 
 
 # Change Log
-* #### v 0.1
+### v 0.1
     * удаление лишнего
     * add "ignore" tag
     * удалить дерево
-* #### Released
+### Released
