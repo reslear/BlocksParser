@@ -7,17 +7,17 @@
 
 
     /* Стили скрипта */
-    .block-parser {
+    .blocks-parser {
 
         position:relative;
 
-        [bm_render]{
+        [data-bm-render]{
             outline: none;
             cursor: text;
             width:100%;
         }
 
-        [bm-focus] {
+        .bm-focus {
             box-sizing: border-box;
             background:#F8F8F8;
             box-shadow: 0 0 5px rgba(0,0,255,.3);
@@ -45,7 +45,7 @@
         box-sizing: border-box;
 
         p, pre, h1, h2{margin-bottom: 20px;}
-        code {background:#F8F8F8;padding:3px 7px;border-radius:3px;box-sizing: border-box}
+        code {background:#F8F8F8;padding:3px 7px;border-radius:3px;box-sizing: border-box;}
 
         pre {
             code { width:100%;display:block;tab-size: 4;}
@@ -63,5 +63,3 @@
         }
 
     }
-
-
