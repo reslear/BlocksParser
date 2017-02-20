@@ -25,7 +25,6 @@
         init.call(this);
     };
 
-    // Public
     BlocksParser.prototype.get = function() {
 
     };
@@ -94,28 +93,30 @@
                     return false;
                 }
 
+                child.dataset.bmText = '';
+
                 child.innerHTML = item.textContent;
                 item.parentNode.replaceChild(child, item);
 
             } else if (item.nodeType === 1) {
 
                 // выходим, если уже прорисовали или узел игнорный
-                if ( item.dataset.hasOwnProperty('bmRender') ) {
+                if ( item.dataset.hasOwnProperty('bmRender') || item.dataset.hasOwnProperty('bmIgnore') ) {
                     return;
                 }
 
                 if (item.children.length) {
 
                     render.init(item);
-                    item.dataset.bmRender = '';
                 } else {
 
                     child.innerHTML = item.innerHTML;
                     item.innerHTML = child.outerHTML;
                 }
 
-                item.dataset.bmRender = '';
+
                 item.dataset.bmTag = item.tagName.toLowerCase();
+                item.dataset.bmRender = '';
             }
 
         },
