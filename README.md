@@ -4,25 +4,25 @@
 [Demo page](http://demo.io/)
 
 # Использование
-1.  Установить стиль и скрипт перед ```</body>```
+1. Установить стиль и скрипт перед `</body>`
 ```
 <link rel="stylesheet" href="blocks-parser.min.css">
 <script src="BlocksParser.js"></script>
 ```
-2.  Запуск парсинга:
+2. Запуск парсинга:
 ```
 var myBlock = new BlocksParser('.blog');
 ```
-где ```.blog``` - селектор с контентом
+где `.blog` - селектор с контентом
 
-3.  Получение html:
+3. Получение html:
 ```
 myBlock.get();
 ```
 
 # API
 ### Свойства
-    + ```BLOCK``` - Узел селектора
+* `BLOCK` - Узел селектора
 ```
 // пример
 var el = document.querySelector('.cust');
@@ -30,7 +30,7 @@ myBlock.BLOCK = el;
 ```
 
 ### Методы
-    + ```get``` - Получение готового HTML кода
+* `get` - Получение готового HTML кода
     ```
     // пример
     myBlock.get();
@@ -39,7 +39,8 @@ myBlock.BLOCK = el;
 
 # Change Log
 ### v 0.1
-    * удаление лишнего
-    * add "ignore" tag
-    * удалить дерево
+* удаление лишнего
+* add "ignore" tag
+* удалить дерево
+
 ### Released
