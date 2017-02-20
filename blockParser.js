@@ -13,7 +13,6 @@
 
     'user strict';
 
-
     // Constructor
     window.BlockParser = function(selector) {
 
@@ -27,7 +26,6 @@
         render.init.call( this.BLOCK );
         events.init.call( this.SELECTOR );
     };
-
 
     // Public
     BlockParser.prototype.get = function(){
