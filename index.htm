@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <meta charset="utf-8">
+<title>BlocksParser</title>
 <link rel="stylesheet" href="blocks-parser.min.css">
 
 
 
 <div class="blog">
 
-    <h1>Заголовок</h1>
+    <h1>BlocksParser release</h1>
     <p>Установка ха-ха</p>
     <div class="steps">
         <p class="step">текст</p>
@@ -35,14 +36,40 @@
         </li>
     </ul>
 
+    <hr />
+    <small>
+        (c) 2016 Korchevskiy Evgeniy (aka ReSLeaR-)<br>
+        <a href="https://vk.com/reslear">vk.com/reslear</a> | <a href="http://upost.su">upost.su</a> | <a href="https://github.com/reslear">github.com/reslear</a>
+    </small>
+    <hr />
+    <br /><br />
+
+
 </div>
 
-<div class="ss">
-        <h1>!dddd</h1>
+<div class="btns" >
+    <button id="save" type="button" title="Созранить результат (Обратный парсинг)">Сохранить</button>
+    <button id="render" type="button" title="Заново сгенерировать весь проект">Заново</button>
 </div>
 
 <script src="BlocksParser.js"></script>
 <script>
-var myBlock = new BlocksParser('.blog');
-var gg = new BlocksParser('.ss');
+(function(){
+    var myBlock = new BlocksParser('.blog');
+
+    var save = document.querySelector('#save');
+    var render = document.querySelector('#render');
+
+    save.onclick = function(){
+        myBlock.compile();
+        this.classList.add('hide');
+        render.classList.remove('hide');
+    }
+
+    render.onclick = function(){
+        myBlock.render();
+        this.classList.add('hide');
+        save.classList.remove('hide');
+    }
+}());
 </script>

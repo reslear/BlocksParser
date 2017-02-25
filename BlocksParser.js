@@ -12,7 +12,8 @@
     TODO:
     - переписать функцию render
     - кастомные события
-    -
+    ✓ link onclick fix
+    ✓ ignore BR and HR tag's
 */
 
 ;(function() {
@@ -56,10 +57,10 @@
 
     var events = {
         blur: function() {
-            thisParent(this).classList.remove('bm-focus');
+            this.classList.remove('bm-focus');
         },
         focus: function() {
-            thisParent(this).classList.add('bm-focus');
+            this.classList.add('bm-focus');
         },
         keydown: function(event) {
 
@@ -73,6 +74,14 @@
                 }
             }
             */
+        },
+        click: function(event) {
+
+            if( this.parentNode.tagName === 'A' ) {
+
+                event.preventDefault();
+                return false;
+            }
         }
     };
 
@@ -105,6 +114,8 @@
                 if( node.classList.contains('bm-child') ) {
                     node.outerHTML = node.innerHTML;
                 }
+
+                node.classList.remove('bm-render');
 
 //                if( 'bmRender' in node.dataset) {
 //                    delete node.dataset.bmRender;
@@ -156,7 +167,7 @@
             } else if (item.nodeType === 1) {
 
                 // выходим, если уже прорисовали или узел игнорный
-                if ( /*item.dataset.hasOwnProperty('bmRender') ||*/ item.dataset.hasOwnProperty('bmIgnore') ) {
+                if ( /*item.dataset.hasOwnProperty('bmRender') ||*/ item.dataset.hasOwnProperty('bmIgnore') || item.tagName === 'BR' || item.tagName === 'HR' ) {
                     return;
                 }
 
@@ -171,7 +182,7 @@
 
 
                 //item.dataset.bmTag = item.tagName.toLowerCase();
-                //item.dataset.bmRender = '';
+                item.classList.add('bm-render');
             }
 
         },

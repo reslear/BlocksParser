@@ -5,13 +5,18 @@
     body{font: normal 13px/1.5  Open Sans, Tahoma;margin:0 auto;width:960px;background:#fff;min-height:100vh;padding: 50px 0; box-sizing: border-box;
     overflow-y: scroll;}
 
+    /* Анимации animation: blink 5s linear infinite;*/
+    @keyframes blink {
+        50% { background: rgba(39,243,106,.1) }
+    }
+
 
     /* Стили скрипта */
     .blocks-parser {
 
         position:relative;
 
-        [data-bm-render]{
+        .bm-render {
             outline: none;
             cursor: text;
             width:100%;
@@ -19,12 +24,11 @@
 
         .bm-focus {
             box-sizing: border-box;
-            background:#F8F8F8;
-            box-shadow: 0 0 5px rgba(0,0,255,.3);
-            border-radius:1px;
-            overflow: hidden;
-        }
+            background: #FFFFD6;
 
+            border-radius:1px;
+            /*overflow: hidden;*/
+        }
 
         /* Редактируемый Потомок */
         .bm-child {
@@ -33,10 +37,9 @@
             display: inline;
         }
 
-        > .bm-child{display: block}
+        > .bm-child{display: block} /* для корневого текста*/
     }
-
-
+    /*dd*/
     /* Пользовательские стили для скрипта */
     .blog {
 
@@ -55,7 +58,7 @@
             counter-reset: step;
 
             .step:before {
-                content: "Шаг " counter(step) ": ";
+                content: "Step " counter(step) ": ";
                 font-size: 10px;
                 font-weight: bold;
                 counter-increment: step;
@@ -63,3 +66,4 @@
         }
 
     }
+    .btns{text-align: center;}
