@@ -1,13 +1,19 @@
 /*!
-    BlocksParser v0.1 beta
+    BlocksParser v0.1 release
     (c) 2016 Korchevskiy Evgeniy (aka ReSLeaR-)
     ---
     vk.com/reslear | upost.su | github.com/reslear
-    @license Released under the MIT License.
+    Released under the MIT @license.
 */
 
 
 // data-bc
+/*
+    TODO:
+    - переписать функцию render
+    - кастомные события
+    -
+*/
 
 ;(function() {
 
@@ -16,29 +22,32 @@
     // Constructor
     this.BlocksParser = function(selector) {
 
-        this.SELECTOR = selector;
-        this.BLOCK = null;
+        if ( !(this.SELECTOR = selector) || !(this.BLOCK = document.querySelector(this.SELECTOR)) ) {
+            return false;
+        }
 
-        this.init();
-    };
-
-
-
-    BlocksParser.prototype.init = function() {
-
-        if (!this.SELECTOR) {return;}
-
-        this.BLOCK = document.querySelector(this.SELECTOR);
-        if (!this.BLOCK) {return;}
-
-        render.init(this.BLOCK);
-        initEvents.call(this);
-        this.BLOCK.classList.add('blocks-parser');
+        this.render();
     };
 
     BlocksParser.prototype.get = function() {
 
+        return _backRender( this.BLOCK.cloneNode(true) );
     };
+
+    BlocksParser.prototype.render = function( isUpdate ) {
+
+        _render.init(this.BLOCK);
+        this.BLOCK.classList.add('blocks-parser');
+        editableEvents.call(this);
+    };
+
+    BlocksParser.prototype.compile = function() {
+
+        editableEvents.call(this, true);
+        this.BLOCK.classList.remove('blocks-parser');
+        _backRender(this.BLOCK);
+    };
+
 
     // Private
     var thisParent = function(el) {
@@ -55,7 +64,7 @@
         keydown: function(event) {
 
             var el = thisParent(this);
-
+/*
             if ( el.dataset.bmTag && el.dataset.bmTag === 'code' ) {
 
                 if (event.keyCode === 9) {
@@ -63,25 +72,68 @@
                     event.preventDefault();
                 }
             }
+            */
         }
     };
 
-    function initEvents() {
+    function editableEvents( hasRemove ) {
 
         var editable = this.BLOCK.querySelectorAll('[contenteditable]');
 
         [].forEach.call(editable, function(item) {
 
             for (var key in events) {
-                item.addEventListener(key, events[key]);
+                item[ (hasRemove ? 'remove' : 'add') + 'EventListener'](key, events[key]);
             }
 
         });
     }
 
+    // Обратный парсинг  TOD: с clone
+
+    // без клона
+    var _backRender = function(main) {
+
+        var self = {};
+
+        self.process = function(node) {
+
+            if( node.nodeType === 1 ) {
+
+                var parent = node.parentNode;
+
+                if( node.classList.contains('bm-child') ) {
+                    node.outerHTML = node.innerHTML;
+                }
+
+//                if( 'bmRender' in node.dataset) {
+//                    delete node.dataset.bmRender;
+//                }
+
+            }
+        };
+
+        self.recursive = function(parent) {
+            var node = parent.childNodes;
+
+            for( var i = 0, len = node.length; i < len; i++ ) {
+
+                if( node[i].children && node[i].children.length ) {
+                  self.recursive(node[i]);
+                }
+
+                self.process(node[i]);
+            }
+
+            return parent; //if( isFirst ){ self.process(parent); }
+        };
+
+        return self.recursive(main);
+    };
+
 
     // Функция парсинга элементов
-    var render = {
+    var _render = {
 
         recursive: function(item) {
 
@@ -91,11 +143,12 @@
 
             if (item.nodeType === 3) {
 
+                // зацщита от пустых строк
                 if ( !item.textContent.trim().length ) {
                     return false;
                 }
 
-                child.dataset.bmText = '';
+                //child.dataset.bmText = '';
 
                 child.innerHTML = item.textContent;
                 item.parentNode.replaceChild(child, item);
@@ -103,13 +156,13 @@
             } else if (item.nodeType === 1) {
 
                 // выходим, если уже прорисовали или узел игнорный
-                if ( item.dataset.hasOwnProperty('bmRender') || item.dataset.hasOwnProperty('bmIgnore') ) {
+                if ( /*item.dataset.hasOwnProperty('bmRender') ||*/ item.dataset.hasOwnProperty('bmIgnore') ) {
                     return;
                 }
 
                 if (item.children.length) {
 
-                    render.init(item);
+                    _render.init(item);
                 } else {
 
                     child.innerHTML = item.innerHTML;
@@ -117,8 +170,8 @@
                 }
 
 
-                item.dataset.bmTag = item.tagName.toLowerCase();
-                item.dataset.bmRender = '';
+                //item.dataset.bmTag = item.tagName.toLowerCase();
+                //item.dataset.bmRender = '';
             }
 
         },
@@ -126,18 +179,22 @@
         init: function(parent) {
 
             // начать перебор всех потомков
-            [].forEach.call(parent.childNodes, render.recursive);
+            [].forEach.call(parent.childNodes, _render.recursive);
         }
 
     };
 
 
-    // Private fx
+    // Private utils fx
     function extend(obj1, obj2) {
         for (var key in obj2) {
             obj1[key] = obj2[key];
         }
         return obj1;
+    }
+
+    function each(arr, fx){
+      return [].forEach.call(arr, fx);
     }
 
 })();
