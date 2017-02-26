@@ -49,7 +49,6 @@
         _backRender(this.BLOCK);
     };
 
-
     // Private
     var thisParent = function(el) {
         return el.parentNode.classList.contains('blocks-parser') ? el : el.parentNode;
